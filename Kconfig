@@ -1,0 +1,100 @@
+#
+# Control And Provisioning of Wireless Access Points Protocol (CAPWAP)
+#
+
+menuconfig CAPWAP
+	tristate "Control And Provisioning of Wireless Access Points (CAPWAP)"
+	depends on INET
+	---help---
+	  Control And Provisioning of Wireless Access Points Protocol
+
+	  From RFC 5415 <http://www.ietf.org/rfc/rfc5415.txt>.
+
+	  CAPWAP assumes a network configuration consisting of multiple WTPs
+	  communicating via the Internet Protocol (IP) to an AC.  WTPs are
+	  viewed as remote radio frequency (RF) interfaces controlled by the
+	  AC.  The CAPWAP protocol supports two modes of operation: Split and
+	  Local MAC (medium access control).  In Split MAC mode, all L2
+	  wireless data and management frames are encapsulated via the CAPWAP
+	  protocol and exchanged between the AC and the WTP.  As shown in
+	  Figure 1, the wireless frames received from a mobile device, which is
+	  referred to in this specification as a Station (STA), are directly
+	  encapsulated by the WTP and forwarded to the AC.
+
+	  If you don't need CAPWAP, say N. To compile all CAPWAP code as
+	  modules, choose M here.
+
+config CAPWAP_DEBUGFS
+	tristate "CAPWAP debugfs support"
+	depends on CAPWAP && DEBUG_FS
+	help
+	  Support for capwap directory in debugfs filesystem. This may be
+	  used to dump internal state of the capwap drivers for problem
+	  analysis.
+
+	  If unsure, say 'Y'.
+
+	  To compile this driver as a module, choose M here. The module
+	  will be called capwap_debugfs.
+
+config CAPWAP_V3
+	bool "CAPWAPv3 support (EXPERIMENTAL)"
+	depends on EXPERIMENTAL && CAPWAP
+	help
+	  Control And Provisioning of Wireless Access Points Protocol Version 3
+
+	  From RFC 3931 <http://www.ietf.org/rfc/rfc3931.txt>.
+
+	  The Control And Provisioning of Wireless Access Points Protocol (CAPWAP) provides a dynamic
+	  mechanism for tunneling Layer 2 (L2) "circuits" across a
+	  packet-oriented data network (e.g., over IP).  CAPWAP, as
+	  originally defined in RFC 2661, is a standard method for
+	  tunneling Point-to-Point Protocol (PPP) [RFC1661] sessions.
+	  CAPWAP has since been adopted for tunneling a number of other
+	  L2 protocols, including ATM, Frame Relay, HDLC and even raw
+	  ethernet frames.
+
+	  If you are connecting to CAPWAPv3 equipment, or you want to
+	  tunnel raw ethernet frames using CAPWAP, say Y here. If
+	  unsure, say N.
+
+config CAPWAP_IP
+	tristate "CAPWAP IP encapsulation for CAPWAPv3"
+	depends on CAPWAP_V3
+	help
+	  Support for CAPWAP-over-IP socket family.
+
+	  The CAPWAPv3 protocol defines two possible encapsulations for
+	  CAPWAP frames, namely UDP and plain IP (without UDP). This
+	  driver provides a new CAPWAPIP socket family with which
+	  userspace CAPWAPv3 daemons may create CAPWAP/IP tunnel sockets
+	  when UDP encapsulation is not required. When CAPWAP is carried
+	  in IP packets, it used IP protocol number 115, so this port
+	  must be enabled in firewalls.
+
+	  To compile this driver as a module, choose M here. The module
+	  will be called capwap_ip.
+
+config CAPWAP_ETH
+	tristate "CAPWAP ethernet pseudowire support for CAPWAPv3"
+	depends on CAPWAP_V3
+	help
+	  Support for carrying raw ethernet frames over CAPWAPv3.
+
+	  From RFC 4719 <http://www.ietf.org/rfc/rfc4719.txt>.
+
+	  The Layer 2 Tunneling Protocol, Version 3 (CAPWAPv3) can be
+	  used as a control protocol and for data encapsulation to set
+	  up Pseudowires for transporting layer 2 Packet Data Units
+	  across an IP network [RFC3931].
+
+	  This driver provides an ethernet virtual interface for each
+	  CAPWAP ethernet pseudowire instance. Standard Linux tools may
+	  be used to assign an IP address to the local virtual
+	  interface, or add the interface to a bridge.
+
+	  If you are using CAPWAPv3, you will almost certainly want to
+	  enable this option.
+
+	  To compile this driver as a module, choose M here. The module
+	  will be called capwap_eth.
