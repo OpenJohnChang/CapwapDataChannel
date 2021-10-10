@@ -1,7 +1,7 @@
 # CapwapTunnel
-Kernel-space implementation of CAPWAP (RFC-5415) tunnel for Linux
+Kernel-space implementation of CAPWAP (RFC-5415 and RFC-5416) data tunnel for Linux
 
-CAPWAP --- Control And Provisioning of Wireless Access Points (RFC-5415)
+CAPWAP --- Control And Provisioning of Wireless Access Points (RFC-5415 and RFC-5416)
 
 Authors: John Chang (mofish@gmail.com)
  
