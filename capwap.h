@@ -1,7 +1,7 @@
  /*****************************************************************************
 * Linux CAPWAP Sockets
 *
-* CAPWAP --- Control And Provisioning of Wireless Access Points (RFC-5415)
+* CAPWAP --- Control And Provisioning of Wireless Access Points (RFC-5415, 5416)
 *
 * Version: 1.0.0
 *
